@@ -11,13 +11,6 @@ struct PlayViewWrapper: View {
     var playName: String?
 
     var body: some View {
-        PlayView(playName: playName)
-    }
-}
-
-struct PlayViewWrapper_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayViewWrapper(playName: "Sample Play")
-            .previewInterfaceOrientation(.landscapeLeft)
+        PlayView(name: playName)
     }
 }

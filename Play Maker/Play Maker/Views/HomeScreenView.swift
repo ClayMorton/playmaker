@@ -54,15 +54,13 @@ struct HomeScreenView: View {
                 }
             }
         }
-        .navigationTitle("Basketball Plays")
-        .navigationBarTitleDisplayMode(.inline)
         .background(Color.white)
     }
 
     private func deletePlay(at offsets: IndexSet) {
         for index in offsets {
             let playToDelete = plays[index]
-            PersistenceManager.shared.deletePlay(name: playToDelete)  // Corrected argument label
+            PersistenceManager.shared.deletePlay(name: playToDelete)
         }
         loadPlays()
     }

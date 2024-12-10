@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ToolBarView: View {
-    @Binding var courtObjects: [CourtObject]
     @State private var selectedTool: PlayTool? = nil
 
     var body: some View {
