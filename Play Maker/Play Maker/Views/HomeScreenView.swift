@@ -8,72 +8,80 @@
 import SwiftUI
 
 struct HomeScreenView: View {
-    @Binding var plays: [String] // List of play names
-    var onSelectPlay: (String) -> Void // Callback for selecting an existing play
-    var onCreatePlay: () -> Void // Callback for creating a new play
+    @Binding var plays: [String]
+    var onSelectPlay: (String) -> Void
+    var onCreatePlay: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             HStack {
+                Text("Plays:")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.leading, 20)
+
                 Spacer()
+
                 Button(action: {
-                    onCreatePlay() // Trigger create new play action
+                    onCreatePlay()
                 }) {
-                    HStack {
-                        Image(systemName: "plus.circle")
-                        Text("Create New Play")
-                    }
-                    .padding(.horizontal)
-                    .font(.title2)
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title)
+                        .foregroundColor(.blue)
+                        .padding(.trailing, 20)
                 }
             }
-            .padding(.top)
+            .padding()
 
-            Text("Plays:")
-                .font(.largeTitle)
-                .padding(.leading)
+            Divider()
 
-            if plays.isEmpty {
-                Text("You don't have any plays yet!")
-                    .font(.title2)
-                    .foregroundColor(.gray)
-                    .padding()
-            } else {
-                List {
+            List {
+                if plays.isEmpty {
+                    Text("You don't have any plays yet!")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                } else {
                     ForEach(plays, id: \.self) { play in
                         Button(action: {
-                            onSelectPlay(play) // Trigger selection of a specific play
+                            onSelectPlay(play)
                         }) {
                             Text(play)
-                                .font(.title3)
+                                .font(.title2)
+                                .foregroundColor(.primary)
                         }
                     }
                     .onDelete(perform: deletePlay)
                 }
-                .listStyle(InsetGroupedListStyle())
             }
-
-            Spacer()
         }
-        .padding()
+        .navigationTitle("Basketball Plays")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.white)
     }
 
     private func deletePlay(at offsets: IndexSet) {
-        // Use the offsets to remove plays and handle persistence
-        plays.remove(atOffsets: offsets)
-        PersistenceManager.shared.deletePlay(atOffsets: offsets)
+        for index in offsets {
+            let playToDelete = plays[index]
+            PersistenceManager.shared.deletePlay(name: playToDelete)  // Corrected argument label
+        }
+        loadPlays()
+    }
+
+    private func loadPlays() {
+        plays = PersistenceManager.shared.listPlays()
     }
 }
 
 struct HomeScreenView_Previews: PreviewProvider {
-    @State static var samplePlays = ["Play 1", "Play 2", "Play 3"]
-
     static var previews: some View {
-        HomeScreenView(
-            plays: $samplePlays,
-            onSelectPlay: { _ in },
-            onCreatePlay: {}
-        )
-            .previewInterfaceOrientation(.landscapeLeft)
+        NavigationView {
+            HomeScreenView(
+                plays: .constant([]),
+                onSelectPlay: { _ in },
+                onCreatePlay: {}
+            )
+        }
+        .previewInterfaceOrientation(.landscapeLeft)
     }
 }
+

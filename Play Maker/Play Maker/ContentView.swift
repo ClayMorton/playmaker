@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var selectedPlay: String? = nil
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             HomeScreenView(
                 plays: $plays,
                 onSelectPlay: { play in
@@ -25,13 +25,9 @@ struct ContentView: View {
             .onAppear {
                 loadPlays()
             }
-            .background(
-                NavigationLink(
-                    destination: PlayViewWrapper(playName: selectedPlay),
-                    isActive: .constant(selectedPlay != nil),
-                    label: { EmptyView() }
-                )
-            )
+            .navigationDestination(for: String.self) { playName in
+                PlayViewWrapper(playName: playName)
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

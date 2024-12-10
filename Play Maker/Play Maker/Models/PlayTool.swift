@@ -5,19 +5,21 @@
 //  Created by Clay Morton on 12/9/24.
 //
 
-import SwiftUI
+import Foundation
 
-enum ToolType {
-    case x, o, line
+enum PlayTool {
+    case x
+    case o
+    case line
 }
 
-struct PlayTool: Identifiable, Equatable {
-    var id = UUID()
-    var name: ToolType
-    var icon: String
-    var action: () -> Void
-    
+extension PlayTool: Equatable {
     static func ==(lhs: PlayTool, rhs: PlayTool) -> Bool {
-            return lhs.name == rhs.name && lhs.icon == rhs.icon
+        switch (lhs, rhs) {
+        case (.x, .x), (.o, .o), (.line, .line):
+            return true
+        default:
+            return false
+        }
     }
 }
