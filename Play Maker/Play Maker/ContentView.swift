@@ -8,17 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var plays: [String] = []
+    @State private var selectedPlay: String? = nil
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            HomeScreenView(
+                plays: $plays,
+                onSelectPlay: { play in
+                    selectedPlay = play
+                },
+                onCreatePlay: {
+                    selectedPlay = nil
+                }
+            )
+            .onAppear {
+                loadPlays()
+            }
+            .background(
+                NavigationLink(
+                    destination: PlayViewWrapper(playName: selectedPlay),
+                    isActive: .constant(selectedPlay != nil),
+                    label: { EmptyView() }
+                )
+            )
         }
-        .padding()
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    private func loadPlays() {
+        plays = PersistenceManager.shared.listPlays()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .previewInterfaceOrientation(.landscapeLeft)
+    }
 }
