@@ -5,8 +5,12 @@
 //  Created by Clay Morton on 12/10/24.
 //
 
-struct PlayView {
+import SwiftUI
+
+struct PlayView: View {
     var name: String
     
-    
+    var body: some View {
+        Text("Hello, World!")
+    }
 }

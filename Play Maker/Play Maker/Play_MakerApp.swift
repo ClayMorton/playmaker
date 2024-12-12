@@ -11,7 +11,7 @@ import SwiftUI
 struct Play_MakerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
