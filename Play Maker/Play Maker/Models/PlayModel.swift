@@ -7,6 +7,21 @@
 
 import Foundation
 
-class PlayModel: Decodable {
+class PlayModel: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
     
+    init(name: String) {
+        self.name = name
+    }
+
+    // Hashable Conformance
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id) // Use the unique identifier for hashing
+    }
+
+    static func == (lhs: PlayModel, rhs: PlayModel) -> Bool {
+        return lhs.id == rhs.id && lhs.name == rhs.name
+    }
 }
+

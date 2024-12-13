@@ -8,10 +8,14 @@
 import SwiftUI
 
 @main
-struct Play_MakerApp: App {
+struct MyApp: App {
+    @StateObject private var playData = PlayData()
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            HomeScreenView()
+                .environmentObject(playData)
         }
     }
 }
+

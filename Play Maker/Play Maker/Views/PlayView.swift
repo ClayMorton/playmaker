@@ -11,6 +11,16 @@ struct PlayView: View {
     var name: String
     
     var body: some View {
-        Text("Hello, World!")
+        VStack(alignment: .leading) {
+            ToolBarView()
+            Text("Play: \(name)")
+                .font(.title)
+                .padding()
+            Spacer()
+        }
     }
+}
+
+#Preview {
+    PlayView(name: "Sample Play")
 }

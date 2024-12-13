@@ -8,24 +8,37 @@
 import SwiftUI
 
 struct HomeScreenView: View {
+    @EnvironmentObject var playData: PlayData
+    @State private var selectedPlay: PlayModel?
+    
     var body: some View {
         NavigationSplitView {
-            List {
-                
+            List(selection: $selectedPlay) {
+                ForEach(playData.plays) { play in
+                    Text(play.name)
+                        .tag(play)
+                }
             }
             .listStyle(.inset)
-                .navigationTitle("Plays:")
-                .toolbar {
-                    Button {
-                        //create play button goes here
-                    } label: {
-                        Label("create play", systemImage: "plus.circle.fill")
-                    }
+            .navigationTitle("Plays:")
+            .toolbar {
+                Button {
+                    // Action for creating a new play
+                } label: {
+                    Label("Create Play", systemImage: "plus.circle.fill")
                 }
+            }
         } detail: {
-            Text("Select a Play")
+            if let play = selectedPlay {
+                PlayView(name: play.name)
+            } else {
+                Text("Select a Play")
+            }
         }
-        
     }
 }
 
+#Preview {
+    HomeScreenView()
+        .environmentObject(PlayData())
+}
