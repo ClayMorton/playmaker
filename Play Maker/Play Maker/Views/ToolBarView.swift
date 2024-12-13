@@ -20,25 +20,22 @@ struct ToolBarView: View {
             Spacer()
             ToolButton(label: "Dribble", systemImage: "arrow.up.arrow.down.circle", tool: .dribble, selectedTool: $selectedTool)
             Spacer()
-            ToolButton(label: "Movement", systemImage: "arrow.trianglehead.swap", tool: .playerMove, selectedTool: $selectedTool)
+            ToolButton(label: "Run", systemImage: "arrow.trianglehead.swap", tool: .playerMove, selectedTool: $selectedTool)
+            Spacer()
+            ToolButton(label: "Remove", systemImage: "eraser.fill", tool: .deletePath, selectedTool: $selectedTool)
         }
-        .padding(.horizontal, 25)
-        .padding(.vertical, 10)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 5)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.gray.opacity(0.2))
         )
         .padding(.horizontal, 16)
-        .padding(.vertical, 3)
     }
 }
 
-#Preview {
-    ToolBarView()
-}
-
 enum ToolType {
-    case defense, offense, pass, dribble, playerMove
+    case defense, offense, pass, dribble, playerMove, deletePath
 }
 
 struct ToolButton: View {
@@ -48,16 +45,25 @@ struct ToolButton: View {
     @Binding var selectedTool: ToolType?
 
     var body: some View {
-        Button {
-            selectedTool = tool
-        } label: {
-            Label(label, systemImage: systemImage)
+            Button {
+                selectedTool = tool
+            } label: {
+                VStack(spacing: 4) { // VStack to arrange icon and text vertically
+                    Image(systemName: systemImage)
+                        .font(.headline) // Adjust icon size
+                    Text(label)
+                        .font(.footnote) // Adjust text size
+                }
                 .padding()
-                .frame(maxWidth: .infinity) // Ensure all buttons take equal space
+                .frame(maxWidth: .infinity) // Ensure buttons take equal space
                 .background(selectedTool == tool ? Color.blue.opacity(0.2) : Color.clear)
                 .cornerRadius(8)
                 .foregroundColor(.blue)
-                .font(selectedTool == tool ? .headline : .body)
+            }
         }
-    }
+}
+
+
+#Preview {
+    ToolBarView()
 }
