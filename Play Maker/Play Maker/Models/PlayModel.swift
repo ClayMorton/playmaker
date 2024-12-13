@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PlayModel: Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var paths: [any Shape] = []
     
     init(name: String) {
         self.name = name
