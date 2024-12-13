@@ -19,9 +19,14 @@ struct PlayView: View {
                     .padding(.vertical, 3)
                 OptionsBarView()
             }
-            Spacer()
+            // Court area in the middle
+            PlayModelView()
+                .frame(maxWidth: .infinity, alignment: .center) // Expand to take available space
+
+            // Toolbar at the bottom
             ToolBarView()
         }
+        .background(Color.white) // Ensure proper background color
     }
 }
 
