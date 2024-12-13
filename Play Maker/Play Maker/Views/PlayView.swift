@@ -12,11 +12,15 @@ struct PlayView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ToolBarView()
-            Text("Play: \(name)")
-                .font(.title)
-                .padding()
+            HStack(alignment: .center) {
+                Text("\(name)")
+                    .font(.headline)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 3)
+                OptionsBarView()
+            }
             Spacer()
+            ToolBarView()
         }
     }
 }

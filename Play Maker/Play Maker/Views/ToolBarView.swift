@@ -11,30 +11,43 @@ struct ToolBarView: View{
     var body: some View{
         HStack(alignment: .center){
             Button{
-                // save button logic goes here
+                // X Object
             } label: {
-                Label("Save", systemImage: "square.and.arrow.down")
+                Label("Defense Player", systemImage: "xmark.circle.fill")
             }
             Spacer()
             Button{
-                // edit button logic goes here
+                // O Object
             } label: {
-                Label("Edit", systemImage: "pencil")
+                Label("Offense Player", systemImage: "o.circle.fill")
             }
             Spacer()
             Button{
-                // This is the logic for animating the play
+                // Pass Arrow (DASHED)
             } label: {
-                Label("Play", systemImage: "play")
+                Label("Pass Ball", systemImage: "arrow.left.arrow.right")
             }
             Spacer()
             Button{
-                // delete button logic connector
+                // Dribble Arrow (WIGGLY)
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label("Dribble Ball", systemImage: "arrow.up.arrow.down.circle")
+            }
+            Spacer()
+            Button{
+                // Player Arrow (SOLID)
+            } label: {
+                Label("Player Move", systemImage: "arrow.trianglehead.swap")
             }
         }
-        .padding()
+        .padding(.horizontal, 25) // Padding inside the HStack
+        .padding(.vertical, 10) // Padding inside the HStack (around words)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.gray.opacity(0.2)) // Light gray background
+        )
+        .padding(.horizontal, 16) // Padding outside the box
+        .padding(.vertical, 3)
     }
 }
 
